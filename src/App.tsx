@@ -1,29 +1,24 @@
-import { useDispatch, useSelector } from "react-redux";
 import "./App.scss";
-import { RootState } from "./redux/store";
-import { incrementCounter } from "./redux/slices/exampleSlice";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Tailwind from "./components/Tailwind";
+import Redux from "./components/Redux";
 
-function App() {
-  const counter = useSelector((state: RootState) => state.example.counter);
-  const dispatch = useDispatch();
-
-  const increment = () => {
-    dispatch(incrementCounter(1));
-  };
-
+const App: React.FC = () => {
   return (
-    <div className="App p-5">
-      <p className="Red">This is a paragraph styled with scss</p>
-      <p className="text-indigo-500">
-        This is a paragraph styled with tailwindcss
-      </p>
-      <label className="text-lg font-bold">
-        Counter stored in persistant redux state: {counter}
-      </label>
-      <br />
-      <button onClick={increment}>Increment Counter</button>
-    </div>
+    <Router>
+      <Navbar />
+      <div className="p-5">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tailwind" element={<Tailwind />} />
+          <Route path="/redux" element={<Redux />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;

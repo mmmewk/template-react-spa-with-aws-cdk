@@ -15,10 +15,12 @@ export const exampleSlice = createSlice({
     incrementCounter: (state, action: PayloadAction<number>) => {
       state.counter += action.payload;
     },
+    resetCounter: (state) => {
+      state.counter = 0;
+    },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { incrementCounter } = exampleSlice.actions;
+export const { incrementCounter, resetCounter } = exampleSlice.actions;
 
 export default exampleSlice.reducer;

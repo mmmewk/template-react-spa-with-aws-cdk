@@ -2,13 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Prettier
+## Additional Frameworks
 
-https://prettier.io/docs/en/install.html
-
-## Tailwindcss
-
-https://tailwindcss.com/docs/guides/create-react-app
+[Prettier](https://prettier.io/docs/en/install.html)
+[Tailwind](https://tailwindcss.com/docs/guides/create-react-app)
+[Redux Toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
+[Redux Persist](https://github.com/rt2zz/redux-persist)
 
 ## Available Scripts
 

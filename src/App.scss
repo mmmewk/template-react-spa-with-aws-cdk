@@ -3,3 +3,17 @@
     color: red;
   }
 }
+
+button {
+  padding: 1px 5px;
+  border-radius: 20px;
+  border: 2px solid indigo;
+  background-color: indigo;
+  color: white;
+  cursor: pointer;
+
+  &:active {
+    background-color: white;
+    color: indigo;
+  }
+}

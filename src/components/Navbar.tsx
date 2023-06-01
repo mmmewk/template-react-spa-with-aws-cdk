@@ -22,6 +22,9 @@ const Navbar: React.FC = () => {
         <Link to="/toast" className="mx-2 whitespace-nowrap">
           <li className="text-gray-50">Toast</li>
         </Link>
+        <Link to="/query-string" className="mx-2 whitespace-nowrap">
+          <li className="text-gray-50">Query String</li>
+        </Link>
       </ul>
     </nav>
   );

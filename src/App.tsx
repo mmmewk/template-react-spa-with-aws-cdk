@@ -8,6 +8,7 @@ import Redux from "./components/Redux";
 import ComponentLibrary from "./components/ComponentLibrary";
 import Toast from "./components/Toast";
 import RTKQuery from "./components/RTKQuery/RTKQuery";
+import QueryString from "./components/QueryString/QueryString";
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           <Route path="/rtk-query" element={<RTKQuery />} />
           <Route path="/component-library" element={<ComponentLibrary />} />
           <Route path="/toast" element={<Toast />} />
+          <Route path="/query-string" element={<QueryString />} />
         </Routes>
       </div>
     </Router>

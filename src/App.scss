@@ -19,3 +19,16 @@ p {
 a {
   color: theme("colors.indigo.500");
 }
+
+input {
+  margin-top: theme("spacing.2");
+  margin-bottom: theme("spacing.2");
+  padding: theme("spacing.1");
+  border-radius: theme("borderRadius.lg");
+  border: 2px solid theme("colors.indigo.500");
+
+  &:focus,
+  &:focus-visible {
+    border: 2px solid theme("colors.indigo.500") !important;
+  }
+}

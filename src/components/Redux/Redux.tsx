@@ -26,6 +26,10 @@ const Redux: React.FC = () => {
         Increment Counter
       </button>
       <button onClick={reset}>Reset Counter</button>
+      <p>
+        Read More about Redux toolkit{" "}
+        <a href="https://redux-toolkit.js.org/">here</a>
+      </p>
     </div>
   );
 };

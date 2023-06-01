@@ -7,6 +7,9 @@ const Tailwind: React.FC = () => {
       <p className="text-indigo-500">
         This is a paragraph styled with tailwind css
       </p>
+      <p>
+        Read More about Tailwind css <a href="https://tailwindcss.com/">here</a>
+      </p>
     </div>
   );
 };

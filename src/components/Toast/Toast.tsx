@@ -10,7 +10,13 @@ const Toast: React.FC = () => {
       </button>
       <p>
         Read More about React Toastify{" "}
-        <a href="https://fkhadra.github.io/react-toastify/introduction">here</a>
+        <a
+          href="https://fkhadra.github.io/react-toastify/introduction"
+          target="_blank"
+          rel="noreferrer"
+        >
+          here
+        </a>
       </p>
     </div>
   );

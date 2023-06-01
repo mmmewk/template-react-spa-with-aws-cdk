@@ -45,7 +45,13 @@ const Select = <T extends unknown>({
         />
         <p>
           Read More about React Select{" "}
-          <a href="https://react-select.com/home">here</a>
+          <a
+            href="https://react-select.com/home"
+            target="_blank"
+            rel="noreferrer"
+          >
+            here
+          </a>
         </p>
       </div>
     </div>

@@ -1,14 +1,16 @@
 // Default styles that we don't want to redefine everywhere in the app
+$indigo-900: rgb(49 46 129);
+
 button {
   padding: 1px 5px;
   border-radius: 20px;
-  border: 2px solid indigo;
-  background-color: indigo;
+  border: 2px solid $indigo-900;
+  background-color: $indigo-900;
   color: white;
   cursor: pointer;
 
   &:active {
     background-color: white;
-    color: indigo;
+    color: $indigo-900;
   }
 }

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Tailwind from "./components/Tailwind";
 import Redux from "./components/Redux";
+import ComponentLibrary from "./components/ComponentLibrary";
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/tailwind" element={<Tailwind />} />
           <Route path="/redux" element={<Redux />} />
+          <Route path="/component-library" element={<ComponentLibrary />} />
         </Routes>
       </div>
     </Router>

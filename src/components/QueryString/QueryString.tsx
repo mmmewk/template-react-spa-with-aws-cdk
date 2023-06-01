@@ -29,7 +29,12 @@ const QueryString: React.FC = () => {
       </button>
       <button onClick={() => setA(0)}>Reset A</button>
       <p>
-        b: <input value={b} onChange={(event) => setB(event.target.value)} />
+        b:{" "}
+        <input
+          className="defaultInput"
+          value={b}
+          onChange={(event) => setB(event.target.value)}
+        />
       </p>
       <p>
         c: [{c.join(", ")}]

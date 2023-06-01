@@ -6,6 +6,7 @@ import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import * as lambda from "aws-cdk-lib/aws-lambda";
+import * as codebuild from "aws-cdk-lib/aws-codebuild";
 
 // Stack for bootin up a single page application on a subdomain of your website
 export class SpaStack extends cdk.Stack {
@@ -16,15 +17,8 @@ export class SpaStack extends cdk.Stack {
     const topLevelDomain = process.env.DOMAIN;
     const domain = `${subdomain}.${topLevelDomain}`;
 
-    const renderSpaLambdaArn = process.env.RENDER_SPA_LAMBDA_ARN;
-    const acmCertificateArn = process.env.ACM_CERTIFICATE_ARN;
-
     if (!subdomain) throw Error("Add SUBDOMAIN to your ENV vars");
     if (!topLevelDomain) throw Error("Add DOMAIN to your ENV vars");
-    if (!renderSpaLambdaArn)
-      throw Error("Add RENDER_SPA_LAMBDA_ARN to your ENV vars");
-    if (!acmCertificateArn)
-      throw Error("Add ACM_CERTIFICATE_ARN to your ENV vars");
 
     // S3 bucket to store the built application
     const bucket = new s3.Bucket(this, "S3 Bucket", {
@@ -42,6 +36,14 @@ export class SpaStack extends cdk.Stack {
         comment: `OAI for ${domain}.`,
       }
     );
+
+    const renderSpaLambdaArn = process.env.RENDER_SPA_LAMBDA_ARN;
+    const acmCertificateArn = process.env.ACM_CERTIFICATE_ARN;
+
+    if (!renderSpaLambdaArn)
+      throw Error("Add RENDER_SPA_LAMBDA_ARN to your ENV vars");
+    if (!acmCertificateArn)
+      throw Error("Add ACM_CERTIFICATE_ARN to your ENV vars");
 
     // Lambda to redirect all traffic to index.html
     //
@@ -118,9 +120,14 @@ export class SpaStack extends cdk.Stack {
 
     // Outputs the command to deploy the application to the console
     new cdk.CfnOutput(this, "Deploy Command", {
+      description: "Command to sync the built project to s3",
+      value: `aws s3 sync ./build s3://${bucket.bucketName} --delete`,
+    });
+
+    new cdk.CfnOutput(this, "Cloudfront Invalidate Command", {
       description:
-        "Replace the script to deploy in package.json with this command",
-      value: `aws s3 sync ./build s3://${bucket.bucketName} --delete && aws cloudfront create-invalidation --distribution-id ${cloudfrontDistribution.distributionId} --paths '/*'`,
+        "command to invalidate the cloudfront distribution when new code is deployed",
+      value: `aws cloudfront create-invalidation --distribution-id ${cloudfrontDistribution.distributionId} --paths '/*'`,
     });
   }
 }

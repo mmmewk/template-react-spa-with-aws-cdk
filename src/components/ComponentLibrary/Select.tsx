@@ -1,5 +1,5 @@
 import startCase from "lodash/startCase";
-import { PropsWithChildren, SetStateAction } from "react";
+import { PropsWithChildren } from "react";
 import ReactSelect from "react-select";
 
 interface Props<T> {

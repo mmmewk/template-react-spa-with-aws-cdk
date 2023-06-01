@@ -4,6 +4,7 @@ Boots up a single page application on a subdomain of a website. Small modificati
 
 ## Getting started
 
+- Run `yarn add global aws-cdk`
 - Rename `.env.example` to `.env`
 - Take the code in `render-spa.js` and deploy is as a Lambda@Edge function. Add the RENDER_SPA_LAMBDA_ARN to your ENV variables.
   - This only needs to happen once between all subdomains
@@ -11,10 +12,9 @@ Boots up a single page application on a subdomain of a website. Small modificati
 - Create an acm certificate for \*.topLevelDomain. Add the ACM_CERTIFICATE_ARN to your ENV variables.
 - Update ENV variables with your subdomain, domain, AWS account number and desired AWS region
 - Run `yarn deploy`
-- This should take a few minutes, then output a deploy command in the console
-- In the main react app `package.json` replace the deploy script with this command
-- Run `yarn deploy` in the main react app
-- Check if your website is live at subdomain.topLevelDomain
+- This should take a few minutes, then output two commands into the console
+- Replace the deploy script in `.github/workflows/deploy.yml` with these commands
+- Push your code to github
 
 ## Useful commands
 

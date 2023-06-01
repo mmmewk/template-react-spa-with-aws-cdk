@@ -2,6 +2,13 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Getting Started
+
+- Create a Github Repository for your project
+- Add `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to your repository secrets
+- Follow the [README](./aws/README.md) to setup AWS environment
+- Deploy your code and see if it is live
+
 ## Additional Frameworks
 
 [Prettier](https://prettier.io/docs/en/install.html)

@@ -13,6 +13,9 @@ const Navbar: React.FC = () => {
         <Link to="/redux" className="mx-2 whitespace-nowrap">
           <li className="text-gray-50">Redux</li>
         </Link>
+        <Link to="/rtk-query" className="mx-2 whitespace-nowrap">
+          <li className="text-gray-50">RTK Query</li>
+        </Link>
         <Link to="/component-library" className="mx-2 whitespace-nowrap">
           <li className="text-gray-50">Component Library</li>
         </Link>

@@ -11,10 +11,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Additional Frameworks
 
-[Prettier](https://prettier.io/docs/en/install.html)
-[Tailwind](https://tailwindcss.com/docs/guides/create-react-app)
-[Redux Toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
-[Redux Persist](https://github.com/rt2zz/redux-persist)
+- [Prettier](https://prettier.io/docs/en/install.html)
+- [Tailwind](https://tailwindcss.com/docs/guides/create-react-app)
+- [Redux Toolkit](https://redux-toolkit.js.org/tutorials/quick-start)
+- [Redux Persist](https://github.com/rt2zz/redux-persist)
+- [React Select](https://react-select.com/home)
+- [React Toastify](https://github.com/fkhadra/react-toastify)
 
 ## Available Scripts
 

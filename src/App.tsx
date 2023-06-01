@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Tailwind from "./components/Tailwind";
 import Redux from "./components/Redux";
 import ComponentLibrary from "./components/ComponentLibrary";
+import Toast from "./components/Toast";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           <Route path="/tailwind" element={<Tailwind />} />
           <Route path="/redux" element={<Redux />} />
           <Route path="/component-library" element={<ComponentLibrary />} />
+          <Route path="/toast" element={<Toast />} />
         </Routes>
       </div>
     </Router>

@@ -6,15 +6,15 @@ Boots up a single page application on a subdomain of a website. Small modificati
 
 - Run `yarn add global aws-cdk`
 - Rename `.env.example` to `.env`
-- Take the code in `render-spa.js` and deploy is as a Lambda@Edge function. Add the RENDER_SPA_LAMBDA_ARN to your ENV variables.
+- These steps need to happen once between all subdomains:
+  - Take the code in `render-spa.js` and deploy is as a Lambda@Edge function. Add the RENDER_SPA_LAMBDA_ARN to your ENV variables.
   - This only needs to happen once between all subdomains
-- Create a hosted zone for your domain in route53
-- Create an acm certificate for \*.topLevelDomain. Add the ACM_CERTIFICATE_ARN to your ENV variables.
+  - Create a hosted zone for your domain in route53
+  - Create an acm certificate for \*.topLevelDomain. Add the ACM_CERTIFICATE_ARN to your ENV variables.
 - Update ENV variables with your subdomain, domain, AWS account number and desired AWS region
 - Run `yarn deploy`
 - This should take a few minutes, then output two commands into the console
 - Replace the deploy script in `.github/workflows/deploy.yml` with these commands
-- Push your code to github
 
 ## Useful commands
 

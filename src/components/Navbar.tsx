@@ -16,6 +16,9 @@ const Navbar: React.FC = () => {
         <Link to="/component-library" className="mx-2 whitespace-nowrap">
           <li className="text-gray-50">Component Library</li>
         </Link>
+        <Link to="/toast" className="mx-2 whitespace-nowrap">
+          <li className="text-gray-50">Toast</li>
+        </Link>
       </ul>
     </nav>
   );

@@ -7,6 +7,8 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 let persistor = persistStore(store);
 
@@ -17,6 +19,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer />
         <App />
       </PersistGate>
     </Provider>

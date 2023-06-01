@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { pokemonApi } from "../../services/pokemonApi";
 import Select from "../ComponentLibrary/Select";
 import Spinner from "../ComponentLibrary/Spinner";
+import startCase from "lodash/startCase";
 
 const RTKQuery: React.FC = () => {
   const [pokemonName, setPokemonName] = useState("bulbasaur");
@@ -22,15 +23,36 @@ const RTKQuery: React.FC = () => {
         value={{ name: pokemonName }}
         setValue={(pokemon) => setPokemonName(pokemon.name)}
         options={firstGenerationPokemon.results}
-        optionLabel={(option) => option.name}
+        optionLabel={(option) => startCase(option.name)}
       />
 
       <p>Data from pokemon API:</p>
       {pokemon && !isFetching ? (
         <>
-          <p>Name: {pokemon.name}</p>
-          <p>height: {pokemon.height}</p>
-          <p>weight: {pokemon.weight}</p>
+          <p>
+            <b>Pokedex Number:</b> {pokemon.id}
+          </p>
+          <p>
+            <b>Name:</b> {startCase(pokemon.name)}
+          </p>
+          <p>
+            <b>height:</b> {pokemon.height}
+          </p>
+          <p>
+            <b>weight:</b> {pokemon.weight}
+          </p>
+          <p>
+            <b>stats:</b>
+            <ul>
+              {pokemon.stats.map((stat) => {
+                return (
+                  <li key={stat.stat.name} className="ml-2">
+                    {stat.stat.name}: {stat.baseStat}
+                  </li>
+                );
+              })}
+            </ul>
+          </p>
         </>
       ) : (
         <Spinner />

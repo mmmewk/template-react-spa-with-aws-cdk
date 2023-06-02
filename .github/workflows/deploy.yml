@@ -14,7 +14,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout Branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Yarn install
         uses: borales/actions-yarn@v3.0.0
         with:
@@ -28,7 +28,7 @@ jobs:
         with:
           cmd: test
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

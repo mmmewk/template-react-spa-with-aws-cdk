@@ -4,7 +4,6 @@ import queryString from "query-string";
 import { useSearchParams } from "react-router-dom";
 
 const BREAKPOINTS = {
-  xs: 414,
   sm: 640,
   md: 768,
   lg: 1024,

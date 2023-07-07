@@ -6,10 +6,14 @@ import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import * as lambda from "aws-cdk-lib/aws-lambda";
-import * as codebuild from "aws-cdk-lib/aws-codebuild";
+import * as certificatemanager from "aws-cdk-lib/aws-certificatemanager";
+import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 
 // Stack for bootin up a single page application on a subdomain of your website
 export class SpaStack extends cdk.Stack {
+  bucket: cdk.aws_s3.Bucket;
+  cloudfrontDistribution: cdk.aws_cloudfront.Distribution;
+
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
@@ -21,7 +25,7 @@ export class SpaStack extends cdk.Stack {
     if (!topLevelDomain) throw Error("Add DOMAIN to your ENV vars");
 
     // S3 bucket to store the built application
-    const bucket = new s3.Bucket(this, "S3 Bucket", {
+    this.bucket = new s3.Bucket(this, "S3 Bucket", {
       bucketName: `www.${domain}`,
       websiteIndexDocument: "index.html",
       websiteErrorDocument: "index.html",
@@ -52,39 +56,29 @@ export class SpaStack extends cdk.Stack {
       "Render SPA Lambda Version",
       renderSpaLambdaArn
     );
+    const certificate = certificatemanager.Certificate.fromCertificateArn(
+      this,
+      "acmCertificate",
+      acmCertificateArn
+    );
 
     // Cloudfront distribution, takes all incoming traffic for subdomain.topLevelDomain and routes it to the s3 bucket index.html
-    const cloudfrontDistribution = new cloudfront.CloudFrontWebDistribution(
+    this.cloudfrontDistribution = new cloudfront.Distribution(
       this,
       "Cloudfront Distribution",
       {
-        viewerCertificate: {
-          aliases: [domain],
-          props: {
-            acmCertificateArn,
-            sslSupportMethod: "sni-only",
-          },
-        },
+        certificate,
         priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
-        originConfigs: [
-          {
-            s3OriginSource: {
-              s3BucketSource: bucket,
-              originAccessIdentity: cloudFrontOAI,
+        domainNames: [domain],
+        defaultBehavior: {
+          origin: new origins.S3Origin(this.bucket),
+          edgeLambdas: [
+            {
+              functionVersion: renderSpaLambda,
+              eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
             },
-            behaviors: [
-              {
-                isDefaultBehavior: true,
-                lambdaFunctionAssociations: [
-                  {
-                    eventType: cloudfront.LambdaEdgeEventType.VIEWER_REQUEST,
-                    lambdaFunction: renderSpaLambda,
-                  },
-                ],
-              },
-            ],
-          },
-        ],
+          ],
+        },
       }
     );
 
@@ -93,13 +87,13 @@ export class SpaStack extends cdk.Stack {
     cloudfrontS3Access.addActions("s3:GetBucket*");
     cloudfrontS3Access.addActions("s3:GetObject*");
     cloudfrontS3Access.addActions("s3:List*");
-    cloudfrontS3Access.addResources(bucket.bucketArn);
-    cloudfrontS3Access.addResources(`${bucket.bucketArn}/*`);
+    cloudfrontS3Access.addResources(this.bucket.bucketArn);
+    cloudfrontS3Access.addResources(`${this.bucket.bucketArn}/*`);
     cloudfrontS3Access.addCanonicalUserPrincipal(
       cloudFrontOAI.cloudFrontOriginAccessIdentityS3CanonicalUserId
     );
 
-    bucket.addToResourcePolicy(cloudfrontS3Access);
+    this.bucket.addToResourcePolicy(cloudfrontS3Access);
 
     // mekoppe.com route53 hosted zone
     const hostedZone = route53.HostedZone.fromLookup(this, "Hosted Zone", {
@@ -108,7 +102,7 @@ export class SpaStack extends cdk.Stack {
 
     // Alias to cloudfront distribution
     const aliasTarget = route53.RecordTarget.fromAlias(
-      new targets.CloudFrontTarget(cloudfrontDistribution)
+      new targets.CloudFrontTarget(this.cloudfrontDistribution)
     );
 
     // Record routing traffic from the subdomain to cloudfront
@@ -121,13 +115,13 @@ export class SpaStack extends cdk.Stack {
     // Outputs the command to deploy the application to the console
     new cdk.CfnOutput(this, "Deploy Command", {
       description: "Command to sync the built project to s3",
-      value: `aws s3 sync ./build s3://${bucket.bucketName} --delete`,
+      value: `aws s3 sync ./build s3://${this.bucket.bucketName} --delete`,
     });
 
     new cdk.CfnOutput(this, "Cloudfront Invalidate Command", {
       description:
         "command to invalidate the cloudfront distribution when new code is deployed",
-      value: `aws cloudfront create-invalidation --distribution-id ${cloudfrontDistribution.distributionId} --paths '/*'`,
+      value: `aws cloudfront create-invalidation --distribution-id ${this.cloudfrontDistribution.distributionId} --paths '/*'`,
     });
   }
 }

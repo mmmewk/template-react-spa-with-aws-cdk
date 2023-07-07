@@ -4,14 +4,20 @@ import "dotenv/config";
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
 import { SpaStack } from "../lib/spa-stack";
+import { ApiStack } from "../lib/api-stack";
 
 const subdomain = process.env.SUBDOMAIN;
 if (!subdomain) throw Error("Add SUBDOMAIN to your ENV vars");
 
+const env = {
+  account: process.env.DEFAULT_ACCOUNT,
+  region: process.env.DEFAULT_REGION,
+};
+
 const app = new cdk.App();
-new SpaStack(app, `${subdomain}Stack`, {
-  env: {
-    account: process.env.DEFAULT_ACCOUNT,
-    region: process.env.DEFAULT_REGION,
-  },
+const spaStack = new SpaStack(app, `${subdomain}Stack`, { env });
+
+new ApiStack(app, `${subdomain}ApiStack`, {
+  env,
+  cloudfrontDistribution: spaStack.cloudfrontDistribution,
 });

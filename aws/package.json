@@ -10,7 +10,9 @@
     "test": "jest",
     "deploy": "cdk deploy",
     "cdk": "cdk",
-    "format": "yarn prettier --write ./"
+    "format": "yarn prettier --write ./",
+    "prestart-api": "cdk synth",
+    "start-api": "sam local start-api -t cdk.out/templateApiStack.template.json -p 3001"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
@@ -22,6 +24,7 @@
     "typescript": "~5.0.4"
   },
   "dependencies": {
+    "@types/aws-lambda": "^8.10.119",
     "aws-cdk-lib": "2.81.0",
     "constructs": "^10.0.0",
     "dotenv": "^16.1.3",

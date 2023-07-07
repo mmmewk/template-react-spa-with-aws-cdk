@@ -11,11 +11,13 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import exampleReduce from "./slices/exampleSlice";
+import { api } from "../services/api";
 import { pokemonApi } from "../services/pokemonApi";
 import thunk from "redux-thunk";
 
 const reducers = combineReducers({
   example: exampleReduce,
+  [api.reducerPath]: api.reducer,
   [pokemonApi.reducerPath]: pokemonApi.reducer,
 });
 
@@ -37,6 +39,7 @@ export const store = configureStore({
       },
     })
       .concat(pokemonApi.middleware)
+      .concat(api.middleware)
       .concat(thunk),
 });
 
